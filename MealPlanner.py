@@ -1,4 +1,5 @@
 import csv
+import random
 
 # capture data from csv file
 data = []
@@ -19,9 +20,15 @@ for i in range (0, len(data)):
 	if data[i][10] == 'y':
 		dinner.append(data[i])
 
-for x in range(0, len(dinner)):
-	if int(dinner[x][1]) < 50:
-		print(dinner[x])
+
+#for x in range(0, len(dinner)):
+#	if int(dinner[x][1]) < 50:
+#		print(dinner[x])
+
+# obtain user information
+age = input("What is your age in years? ")
+sex = input("what is your sex (m/f) ")
+
 # find the caloric intake of the user
 def caloricIntake(sex, age):
 
@@ -47,6 +54,39 @@ def caloricIntake(sex, age):
 		if age > 65:
 			return 1600
 
-	# obtain user information
-	age = input("What is your age in years? ")
-	sex = input("what is your sex (m/f) ")
+dailyCalories = caloricIntake(sex,age)
+calsPerMeals = dailyCalories / 3
+
+# always have meat and vegetables
+# fruits, dairy, grains, and other may or may not be included
+myBreakfast = []
+for i in range(0, len(breakfast)):
+	if breakfast[i][11] == 'meat':
+		myBreakfast.append(breakfast[i])
+		break;
+
+for i in range(0, len(breakfast)):
+	if breakfast[i][11] == 'vegetable':
+		myBreakfast.append(breakfast[i])
+		break;
+
+# select a random group for our third
+variableGroup = random.randint(0,3)
+
+if(variableGroup == 0):
+	variableGroup = 'fruit'
+if(variableGroup == 1):
+	variableGroup = 'dairy'
+if(variableGroup == 2):
+	variableGroup = 'grain'
+if(variableGroup == 3):
+	variableGroup = 'other'
+
+
+for i in range(0, len(breakfast)):
+	if breakfast[i][11] == variableGroup:
+		myBreakfast.append(breakfast[i])
+		break;
+
+for i in range(0, len(myBreakfast)):
+	print(myBreakfast[i])
