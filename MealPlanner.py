@@ -61,11 +61,22 @@ calsPerMeals = dailyCalories / 3
 # fruits, dairy, grains, and other may or may not be included
 myBreakfast = []
 for i in range(0, len(breakfast)):
-	if breakfast[i][11] == 'meat':
+	x = random.randint(1, len(breakfast) -1)
+	print(x)
+	if breakfast[x][11] == 'meat':
 		myBreakfast.append(breakfast[i])
 		break;
 
 for i in range(0, len(breakfast)):
+	meat = random.choice(breakfast)
+	if meat[11]== 'meat':
+		print(meat)
+		break
+
+#print(myBreakfast)
+'''
+for i in range(0, len(breakfast)):
+	print(random.randint(1, len(breakfast) -1))
 	if breakfast[i][11] == 'vegetable':
 		myBreakfast.append(breakfast[i])
 		break;
@@ -84,9 +95,11 @@ if(variableGroup == 3):
 
 
 for i in range(0, len(breakfast)):
+	print(random.randint(1, len(breakfast) -1))
 	if breakfast[i][11] == variableGroup:
 		myBreakfast.append(breakfast[i])
 		break;
 
 for i in range(0, len(myBreakfast)):
 	print(myBreakfast[i])
+'''
