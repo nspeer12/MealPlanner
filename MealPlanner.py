@@ -142,7 +142,7 @@ lunchCals = calsPerMeal
 print(lunchCals)
 
 meat = getMeat(lunch)
-while float(meat[2]) < float(dailyProtein) / 3 and lunchCals > dailyCalories * .45 / 3 :
+while float(meat[2]) < float(dailyProtein) / 2 and lunchCals > dailyCalories * .45 / 3 :
 	lunchCals -= int(meat[1])
 	dailyProtein -= float(meat[2])
 	myLunch.append(meat)
@@ -161,3 +161,31 @@ while lunchCals > 100:
 
 print(lunchCals)
 print(myLunch)
+
+myDinner = []
+dinnerCals = calsPerMeal
+
+meat = getMeat(dinner)
+while float(meat[2]) < float(dailyProtein) and dinnerCals > dailyCalories * .275 / 3:
+	dinnerCals -= int(meat[1])
+	dailyProtein -= float(meat[2])
+	myDinner.append(meat)
+	meat = getMeat(dinner)
+
+veg = getVeg(dinner)
+while int(veg[1]) < dinnerCals - 300:
+	dinnerCals -= int(veg[1])
+	myDinner.append(veg)
+	veg = getVeg(dinner)
+
+while dinnerCals > 100:
+	side = getSide(dinner)
+	dinnerCals -= int(side[1])
+	myDinner.append(side)
+
+print(dinnerCals)
+print(myDinner)
+
+print()
+# should be as close to zero as possible
+print(dinnerCals + lunchCals + breakfastCals)
