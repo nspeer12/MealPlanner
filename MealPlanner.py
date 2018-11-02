@@ -112,20 +112,52 @@ def getSide(meal):
 			return side
 
 meat = getMeat(breakfast)
-if int(meat[1]) < breakfastCals:
+while float(meat[2]) < float(dailyProtein) / 3 and breakfastCals > dailyCalories * .45 / 3 : # this expression keeps breakfast cals in range
 	breakfastCals -= int(meat[1])
+	dailyProtein -= float(meat[2])
 	myBreakfast.append(meat)
+	meat = getMeat(breakfast)
+
 
 veg = getVeg(breakfast)
-if int(veg[1]) < breakfastCals:
+while int(veg[1]) < breakfastCals * .10 / 3:
 	breakfastCals -= int(veg[1])
 	myBreakfast.append(veg)
+	veg = getVeg(breakfast)
 
+# need to tweak margins
 while breakfastCals > 100:
 	side = getSide(breakfast)
 	breakfastCals -= int(side[1])
 	myBreakfast.append(side)
 
-
 print(breakfastCals)
 print(myBreakfast)
+
+
+print()
+
+myLunch = []
+lunchCals = calsPerMeal
+print(lunchCals)
+
+meat = getMeat(lunch)
+while float(meat[2]) < float(dailyProtein) / 3 and lunchCals > dailyCalories * .45 / 3 :
+	lunchCals -= int(meat[1])
+	dailyProtein -= float(meat[2])
+	myLunch.append(meat)
+	meat = getMeat(lunch)
+
+veg = getVeg(lunch)
+while int(veg[1]) < lunchCals - 300:
+	lunchCals -= int(veg[1])
+	myLunch.append(veg)
+	veg = getVeg(lunch)
+
+while lunchCals > 100:
+	side = getSide(lunch)
+	lunchCals -= int(side[1])
+	myLunch.append(side)
+
+print(lunchCals)
+print(myLunch)
