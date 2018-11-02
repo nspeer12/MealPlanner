@@ -1,4 +1,4 @@
-Name,Kcal,Protein_(g),Carbohydrt_(g),FA_Sat_(g),FA_Mono_(g),FA_Poly_(g),Fats_Total_(g),Breakfast,Lunch,Dinner,Group
+Name,Kcal,Protein_(g),Carbohydrate(g),FA_Sat_(g),FA_Mono_(g),FA_Poly_(g),Fats_Total_(g),Breakfast,Lunch,Dinner,Group
 ALMONDS,575,21.22,21.67,3.731,30.889,12.07,46.69,n,y,n,other
 "APPLES",52,0.26,13.81,0.028,0.007,0.051,0.086,y,y,n,fruit
 "APRICOTS",48,1.4,11.12,0.027,0.17,0.077,0.274,y,y,n,fruit

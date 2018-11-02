@@ -55,51 +55,77 @@ def caloricIntake(sex, age):
 			return 1600
 
 dailyCalories = caloricIntake(sex,age)
-calsPerMeals = dailyCalories / 3
+calsPerMeal = dailyCalories / 3
+
+# 47 - carbs
+# 27.5 - Protein
+# 27.5 - Fat
+dailyCarbs = dailyCalories * .475 / 4
+dailyProtein = dailyCalories * .275 / 4
+dailyFat = dailyCalories * .275 / 9
+
+
+
 
 # always have meat and vegetables
 # fruits, dairy, grains, and other may or may not be included
 myBreakfast = []
-for i in range(0, len(breakfast)):
-	x = random.randint(1, len(breakfast) -1)
-	print(x)
-	if breakfast[x][11] == 'meat':
-		myBreakfast.append(breakfast[i])
-		break;
+breakfastCals = calsPerMeal
+print(breakfastCals)
 
-for i in range(0, len(breakfast)):
-	meat = random.choice(breakfast)
-	if meat[11]== 'meat':
-		print(meat)
-		break
+def getMeat(meal):
+	for i in range(0, len(meal)):
+		meat = random.choice(meal)
+		if meat[11]== 'meat':
+			return meat
 
-#print(myBreakfast)
-'''
-for i in range(0, len(breakfast)):
-	print(random.randint(1, len(breakfast) -1))
-	if breakfast[i][11] == 'vegetable':
-		myBreakfast.append(breakfast[i])
-		break;
+def getVeg(meal):
+	for i in range(0, len(meal)):
+		veg = random.choice(meal)
+		if veg[11]== 'vegetable':
+			return veg
 
 # select a random group for our third
-variableGroup = random.randint(0,3)
+# these statements are to find the string name of the group
 
-if(variableGroup == 0):
-	variableGroup = 'fruit'
-if(variableGroup == 1):
-	variableGroup = 'dairy'
-if(variableGroup == 2):
-	variableGroup = 'grain'
-if(variableGroup == 3):
-	variableGroup = 'other'
+def getVarGroup():
+	variableGroup = random.randint(0,3)
+
+	if(variableGroup == 0):
+		variableGroup = 'fruit'
+	if(variableGroup == 1):
+		variableGroup = 'dairy'
+	if(variableGroup == 2):
+		variableGroup = 'grain'
+	if(variableGroup == 3):
+		variableGroup = 'other'
+
+	return variableGroup
 
 
-for i in range(0, len(breakfast)):
-	print(random.randint(1, len(breakfast) -1))
-	if breakfast[i][11] == variableGroup:
-		myBreakfast.append(breakfast[i])
-		break;
+# This group is going to be called 'side'
+# we want this group to satisfy the remaining breakfast cals
+def getSide(meal):
+	for i in range(0, len(meal)):
+		side = random.choice(meal)
+		if side[11] == getVarGroup():
+			return side
 
-for i in range(0, len(myBreakfast)):
-	print(myBreakfast[i])
-'''
+meat = getMeat(breakfast)
+if int(meat[1]) < breakfastCals:
+	breakfastCals -= int(meat[1])
+	myBreakfast.append(meat)
+
+veg = getVeg(breakfast)
+if int(veg[1]) < breakfastCals:
+	breakfastCals -= int(veg[1])
+	myBreakfast.append(veg)
+
+while breakfastCals > 100:
+	side = getSide(breakfast)
+	breakfastCals -= int(side[1])
+	myBreakfast.append(side)
+
+
+print(breakfastCals)
+print(myBreakfast)
