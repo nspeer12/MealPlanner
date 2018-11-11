@@ -27,7 +27,7 @@ for i in range (0, len(data)):
 
 # obtain user information
 age = input("What is your age in years? ")
-sex = input("what is your sex (m/f) ")
+sex = raw_input("what is your sex (m/f) ")
 
 # find the caloric intake of the user
 def caloricIntake(sex, age):
@@ -71,7 +71,7 @@ dailyFat = dailyCalories * .275 / 9
 # fruits, dairy, grains, and other may or may not be included
 myBreakfast = []
 breakfastCals = calsPerMeal
-print(breakfastCals)
+
 
 def getMeat(meal):
 	for i in range(0, len(meal)):
@@ -131,15 +131,8 @@ while breakfastCals > 100:
 	breakfastCals -= int(side[1])
 	myBreakfast.append(side)
 
-print(breakfastCals)
-print(myBreakfast)
-
-
-print()
-
 myLunch = []
 lunchCals = calsPerMeal
-print(lunchCals)
 
 meat = getMeat(lunch)
 while float(meat[2]) < float(dailyProtein) / 2 and lunchCals > dailyCalories * .45 / 3 :
@@ -159,8 +152,6 @@ while lunchCals > 100:
 	lunchCals -= int(side[1])
 	myLunch.append(side)
 
-print(lunchCals)
-print(myLunch)
 
 myDinner = []
 dinnerCals = calsPerMeal
@@ -183,9 +174,25 @@ while dinnerCals > 100:
 	dinnerCals -= int(side[1])
 	myDinner.append(side)
 
-print(dinnerCals)
-print(myDinner)
 
-print()
+def printMeals(breakfast, lunch, dinner):
+	print('\n\t\tFood\t\t\tCalories\tProtein(g)\tCarbohydrates(g)\tFat(g)')
+	
+	print('Breakfast')
+	for food in breakfast:
+		print('\t\t' + '{:<20}'.format(food[0]) + '\t' + food[1] + '\t\t' + food[2] + '\t\t' + food[3] + '\t\t\t' + food[7])
+	
+	print('Lunch')
+	for food in lunch:
+		print('\t\t' + '{:<20}'.format(food[0]) + '\t' + food[1] + '\t\t' + food[2] + '\t\t' + food[3] + '\t\t\t' + food[7])
+
+	print('Dinner')	
+	for food in dinner:
+		print('\t\t' + '{:<20}'.format(food[0]) + '\t' + food[1] + '\t\t' + food[2] + '\t\t' + food[3] + '\t\t\t' + food[7])
+
+
+printMeals(myBreakfast, myLunch, myDinner)
+
+
 # should be as close to zero as possible
 print(dinnerCals + lunchCals + breakfastCals)
