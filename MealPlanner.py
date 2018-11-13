@@ -1,6 +1,6 @@
 import csv
 import random
-
+import matplotlib
 # capture data from csv file
 data = []
 with open('DATA_FOOD_CALORIES.csv', mode='r') as csvfile:
@@ -27,7 +27,7 @@ for i in range (0, len(data)):
 
 # obtain user information
 age = input("What is your age in years? ")
-sex = raw_input("what is your sex (m/f) ")
+sex = input("what is your sex (m/f) ")
 
 # find the caloric intake of the user
 def caloricIntake(sex, age):
@@ -260,3 +260,27 @@ dailyCalories = dinnerCals + lunchCals + breakfastCals
 
 # condition within print statement to show if calories are left or exceeded daily requirements
 print(str(dailyCalories) + ' daily calories remaining' if dailyCalories > 0 else 'Exceeded daily calories by ' + str( -1 *dailyCalories) )
+
+meatCals = 0
+vegCals = 0
+grainCals = 0
+dairyCals = 0
+fruitCals = 0
+otherCals = 0
+
+print(myBreakfast[1][11])
+'''
+for food in myBreakfast
+# Data to plot
+labels = 'Meat', 'Vegetable', 'Grain', 'Dairy', 'Fruit', 'Other'
+sizes = [215, 130, 245, 210]
+colors = ['gold', 'yellowgreen', 'lightcoral', 'lightskyblue']
+explode = (0.1, 0, 0, 0)  # explode 1st slice
+
+# Plot
+plt.pie(sizes, explode=explode, labels=labels, colors=colors,
+        autopct='%1.1f%%', shadow=True, startangle=140)
+
+plt.axis('equal')
+plt.show()
+'''
