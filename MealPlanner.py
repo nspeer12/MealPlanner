@@ -60,25 +60,27 @@ calsPerMeal = dailyCalories / 3
 # 47 - carbs
 # 27.5 - Protein
 # 27.5 - Fat
-dailyCarbs = dailyCalories * .475 / 4
+# Carbohydrates and Protein are 4 calories per gram
+dailyCarbs = dailyCalories * .45 / 4
 dailyProtein = dailyCalories * .275 / 4
+
+# Fat is 9 calories per gram
 dailyFat = dailyCalories * .275 / 9
-
-
 
 
 # always have meat and vegetables
 # fruits, dairy, grains, and other may or may not be included
-myBreakfast = []
-breakfastCals = calsPerMeal
 
 
+
+# function returns a random meat
 def getMeat(meal):
 	for i in range(0, len(meal)):
 		meat = random.choice(meal)
 		if meat[11]== 'meat':
 			return meat
 
+# function returns a random vegetable
 def getVeg(meal):
 	for i in range(0, len(meal)):
 		veg = random.choice(meal)
@@ -104,95 +106,157 @@ def getVarGroup():
 
 
 # This group is going to be called 'side'
-# we want this group to satisfy the remaining breakfast cals
+# This function will call a getVarGroup to get a side category
+# then it will search for a food of that category and return it
 def getSide(meal):
 	for i in range(0, len(meal)):
 		side = random.choice(meal)
 		if side[11] == getVarGroup():
 			return side
 
+
+# How while loops work throughout the program
+
+	# while (calories * modifier) > # of calories
+		# get a food item
+		# subtract food calories from meal calories
+		# subtract grams of protein from dailyProtein
+		# subtract grams of carbs from dailyCarbs
+		# subtract grams of fat from dailyFat
+		# add a food to list of meal
+
+
+# create a list of our breakfast foods
+myBreakfast = []
+breakfastCals = calsPerMeal
+
+# first addition to breakfast is meat
+# once 1/3 of daily protien is met, loop exits
 meat = getMeat(breakfast)
-while float(meat[2]) < float(dailyProtein) / 3 and breakfastCals > dailyCalories * .45 / 3 : # this expression keeps breakfast cals in range
+while float(meat[2]) < float(dailyProtein) / 3 and breakfastCals > (dailyCalories * .275/ 3):
 	breakfastCals -= int(meat[1])
 	dailyProtein -= float(meat[2])
+	dailyFat -= float(meat[7])
+	dailyCarbs -= float(meat[3])
 	myBreakfast.append(meat)
 	meat = getMeat(breakfast)
 
-
-veg = getVeg(breakfast)
-while int(veg[1]) < breakfastCals * .10 / 3:
-	breakfastCals -= int(veg[1])
-	myBreakfast.append(veg)
-	veg = getVeg(breakfast)
-
-# need to tweak margins
-while breakfastCals > 100:
+# if breakfast calories are greater than 300, add a side
+# do this before adding vegetables, because vegetables are low calorie
+# each side is around 300 calories
+while breakfastCals > 300:
 	side = getSide(breakfast)
+	dailyProtein -= float(side[2])
+	dailyFat -= float(side[7])
+	dailyCarbs -= float(side[3])
 	breakfastCals -= int(side[1])
 	myBreakfast.append(side)
 
+# while breakfast calories have not been satisfied, add more veggies
+# each vegetable is around 20 calories
+while breakfastCals > 20:
+	veg = getVeg(breakfast)
+	breakfastCals -= int(veg[1])
+	dailyProtein -= float(veg[2])
+	dailyFat -= float(veg[7])
+	dailyCarbs -= float(veg[3])
+	myBreakfast.append(veg)
+
+# create lunch list
 myLunch = []
+
+# var to store remaining calories for lunch
 lunchCals = calsPerMeal
 
+# one half of the dailyProtein var will give us 1/3 of daily protein in grams
+# add meat until 1/3 of daily protein has been met and 1/3 of lunch calories has been met
 meat = getMeat(lunch)
-while float(meat[2]) < float(dailyProtein) / 2 and lunchCals > dailyCalories * .45 / 3 :
+while float(meat[2]) < float(dailyProtein) / 2 and lunchCals > (dailyCalories * .275/ 3):
 	lunchCals -= int(meat[1])
 	dailyProtein -= float(meat[2])
+	dailyFat -= float(meat[7])
+	dailyCarbs -= float(meat[3])
 	myLunch.append(meat)
 	meat = getMeat(lunch)
 
-veg = getVeg(lunch)
-while int(veg[1]) < lunchCals - 300:
-	lunchCals -= int(veg[1])
-	myLunch.append(veg)
-	veg = getVeg(lunch)
-
-while lunchCals > 100:
+while lunchCals > 300:
 	side = getSide(lunch)
 	lunchCals -= int(side[1])
+	dailyProtein -= float(side[2])
+	dailyFat -= float(side[7])
+	dailyCarbs -= float(side[3])
 	myLunch.append(side)
 
+while lunchCals > 20:
+	veg = getVeg(lunch)
+	lunchCals -= int(veg[1])
+	dailyProtein -= float(veg[2])
+	dailyCarbs -= float(veg[3])
+	dailyFat -= float(veg[7])
+	myLunch.append(veg)
 
+# create list for dinner
 myDinner = []
 dinnerCals = calsPerMeal
 
+# the rest of the daily protein requirement needs to be met
+# also 27.5 % of dinner calories should come from meat
 meat = getMeat(dinner)
-while float(meat[2]) < float(dailyProtein) and dinnerCals > dailyCalories * .275 / 3:
+while float(meat[2]) < float(dailyProtein) - 50 and dinnerCals > (dailyCalories * .275/ 3):
 	dinnerCals -= int(meat[1])
 	dailyProtein -= float(meat[2])
+	dailyFat -= float(meat[7])
+	dailyCarbs -= float(meat[3])
 	myDinner.append(meat)
 	meat = getMeat(dinner)
 
-veg = getVeg(dinner)
-while int(veg[1]) < dinnerCals - 300:
-	dinnerCals -= int(veg[1])
-	myDinner.append(veg)
-	veg = getVeg(dinner)
-
-while dinnerCals > 100:
+# while over 300 calories remain in dinner, get a side
+# each side is around 300 calories
+while dinnerCals > 300:
 	side = getSide(dinner)
 	dinnerCals -= int(side[1])
+	dailyProtein -= float(side[2])
+	dailyCarbs -= float(side[3])
+	dailyFat -= float(side[7])
 	myDinner.append(side)
+
+# once side-loop breaks, fill remaining calories with vegetables
+# > 20 because each vegatable is around 20 calories, we don't want to go over
+while dinnerCals > 20:
+	veg = getVeg(dinner)
+	dinnerCals -= int(veg[1])
+	dailyProtein -= float(veg[2])
+	dailyFat -= float(veg[7])
+	dailyCarbs -= float(veg[3])
+	myDinner.append(veg)
+
 
 
 def printMeals(breakfast, lunch, dinner):
 	print('\n\t\tFood\t\t\tCalories\tProtein(g)\tCarbohydrates(g)\tFat(g)')
-	
+
 	print('Breakfast')
 	for food in breakfast:
 		print('\t\t' + '{:<20}'.format(food[0]) + '\t' + food[1] + '\t\t' + food[2] + '\t\t' + food[3] + '\t\t\t' + food[7])
-	
+
 	print('Lunch')
 	for food in lunch:
 		print('\t\t' + '{:<20}'.format(food[0]) + '\t' + food[1] + '\t\t' + food[2] + '\t\t' + food[3] + '\t\t\t' + food[7])
 
-	print('Dinner')	
+	print('Dinner')
 	for food in dinner:
 		print('\t\t' + '{:<20}'.format(food[0]) + '\t' + food[1] + '\t\t' + food[2] + '\t\t' + food[3] + '\t\t\t' + food[7])
 
 
 printMeals(myBreakfast, myLunch, myDinner)
 
+print('\ncarbs ' + str(dailyCarbs) + '\t protein ' + str(dailyProtein) + ' \tfat ' + str(dailyFat))
 
-# should be as close to zero as possible
-print(dinnerCals + lunchCals + breakfastCals)
+
+# add up calories of each meal
+dailyCalories = dinnerCals + lunchCals + breakfastCals
+
+# Ideally, remaining should be as close to zero as possible
+
+# condition within print statement to show if calories are left or exceeded daily requirements
+print(str(dailyCalories) + ' daily calories remaining' if dailyCalories > 0 else 'Exceeded daily calories by ' + str( -1 *dailyCalories) )
